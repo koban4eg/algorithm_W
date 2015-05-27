@@ -1,0 +1,1 @@
+let d = \m.\n.m n in d (\f.\x.f (f x)) k
