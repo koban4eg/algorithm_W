@@ -1,6 +1,4 @@
-/**
- * Created by nik on 26.05.15.
- */
+
 public class Arrow implements Type {
     Type from;
     Type to;

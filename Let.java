@@ -38,7 +38,7 @@ public class Let implements ParseExpr {
             throw new RuntimeException(String.format("Duplicate bound %s variable in let", var.toString()));
         HashMap<ParseExpr, Type> env1 = new HashMap<ParseExpr, Type>(map);
         defExpr.inferType(env1);
-        HashMap<ParseExpr, Type> env2 = new HashMap<ParseExpr, Type>();
+        HashMap<ParseExpr, Type> env2 = new HashMap<ParseExpr, Type>(map);
 
         if(defExpr instanceof Abs) {
             Arrow a = new Arrow((Arrow) env1.get(defExpr), true);
@@ -50,9 +50,5 @@ public class Let implements ParseExpr {
         inExpr.inferType(env2);
         map.put(this, env2.get(inExpr));
 
-        System.out.println("Context:");
-        for(Map.Entry<ParseExpr, Type> entry : env2.entrySet()) {
-            System.out.println(String.format("%s : %s", entry.getKey().toString(), entry.getValue().toString()));
-        }
     }
 }

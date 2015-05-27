@@ -32,8 +32,9 @@ public class Abs implements ParseExpr {
     public void inferType(HashMap<ParseExpr, Type> map) {
         if(map.containsKey(var))
             throw new RuntimeException(String.format("Duplicate bound %s variable in lambda", var.toString()));
-        body.inferType(map);
+
         var.inferType(map);
+        body.inferType(map);
         map.put(this, new Arrow(map.get(var), map.get(body)));
     }
 }

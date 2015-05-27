@@ -43,7 +43,7 @@ public class App implements ParseExpr {
             Arrow a = (Arrow) t2;
             return new Arrow(substituteTyVar(name, t1, a.from), substituteTyVar(name, t1, a.to));
         }
-        throw new RuntimeException(String.format("Can't substitute TyVar % % %", name, t1, t2));
+        throw null;//new RuntimeException(String.format("Can't substitute TyVar % % %", name, t1, t2));
     }
 
     public static <T, E> T getKeyByValue(Map<T, E> map, E value) {
@@ -125,7 +125,10 @@ public class App implements ParseExpr {
         if(second instanceof Abs) {
             HashMap<ParseExpr, Type> new_env = new HashMap<>(map);
             second.inferType(new_env);
-            map.put(second, new_env.get(second));
+            Type t = new_env.get(second);
+            second = new Var("anonimous" + String.valueOf(Var.Count));
+            Var.Count += 1;
+            map.put(second, t);
         }else {
             second.inferType(map);
         }
@@ -154,17 +157,22 @@ public class App implements ParseExpr {
         } else if (first instanceof Abs) {
             HashMap<ParseExpr, Type> new_env = new HashMap<>(map);
             first.inferType(new_env);
-            map.put(first, new_env.get(first));
-            Arrow arrow = (Arrow) map.get(first);
-            if(areTypesCompatible(arrow.from, map.get(second))) {
-                unifyTypes(arrow.from, map.get(second), map);
-                map.put(this, arrow.to);
 
-            } else {
-                throw new RuntimeException(
-                        String.format("Can't apply %s to %s. Incompatible types",
-                                first.toString(), second.toString()));
-            }
+            Type t = new_env.get(first);
+            first = new Var("anonimous" + String.valueOf(Var.Count));
+            Var.Count += 1;
+            map.put(first, t);
+
+            Arrow arrow = (Arrow) map.get(first);
+            //if(areTypesCompatible(arrow.from, map.get(second))) {
+            unifyTypes(arrow.from, map.get(second), map);
+            map.put(this, arrow.to);
+
+            //} else {
+            //    throw new RuntimeException(
+            //            String.format("Can't apply %s to %s. Incompatible types",
+            //                    first.toString(), second.toString()));
+            //}
         }
     }
 }

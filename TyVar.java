@@ -1,8 +1,6 @@
-/**
- * Created by nik on 26.05.15.
- */
+
 public class TyVar implements Type {
-    static char Current = 'a';
+    static int Current = 0;
 
 
     @Override
@@ -21,7 +19,7 @@ public class TyVar implements Type {
     boolean generic;
     public TyVar()
     {
-        name = "" + Current;
+        name = "t" + String.valueOf(Current);
         generic = true;
         Current +=1;
     }
@@ -32,7 +30,7 @@ public class TyVar implements Type {
     @Override
     public void changeName() {
         if(generic) {
-            name = name + Current;
+            name = name + "v" + Current;
             generic = false;
         }
     }
@@ -49,7 +47,6 @@ public class TyVar implements Type {
     @Override
     public String toString()
     {
-        //return String.valueOf(name.hashCode());
         return name;
     }
 }

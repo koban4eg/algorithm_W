@@ -2,16 +2,16 @@ import java.util.HashMap;
 
 public class Var implements ParseExpr {
     String name;
-    static char count = '0';
+    static int Count = 0;
 
     public Var(String name) {
         this.name = name;
     }
 
-    public void changeName()
+    void changeName()
     {
-        name = name + count;
-        count += 1;
+        name = name + String.valueOf(Count);
+        Count += 1;
     }
 
 
