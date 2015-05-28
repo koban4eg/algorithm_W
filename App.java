@@ -166,7 +166,7 @@ public class App implements ParseExpr {
             Arrow arrow = (Arrow) map.get(first);
             //if(areTypesCompatible(arrow.from, map.get(second))) {
             unifyTypes(arrow.from, map.get(second), map);
-            map.put(this, arrow.to);
+            map.put(this, ((Arrow) map.get(first)).to);
 
             //} else {
             //    throw new RuntimeException(
